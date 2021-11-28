@@ -1,22 +1,39 @@
 package com.Mini_project_Oct_30_Maven;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BaseClass {
 
 	public static WebDriver driver;
+	
+	public static String value;
 
 	public static WebDriver getBrowser(String type) {
 		try {
@@ -83,9 +100,19 @@ public class BaseClass {
 
 	}
 
-	public static void implicitwait() {
+	public static void implicitwait(int seconds, TimeUnit format) {
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
+	}
+
+	public static void ExplicitWait(int seconds, WebElement element) {
+		WebDriverWait wait = new WebDriverWait(driver, seconds);
+		wait.until(ExpectedConditions.visibilityOf(element));
+	}
+
+	public static void Fluent_Wait() {
+		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(60, TimeUnit.SECONDS)
+				.pollingEvery(5, TimeUnit.SECONDS).ignoring(NoSuchElementException.class);
 	}
 
 	public static void selectByValue(WebElement location, String NewYork) {
@@ -115,18 +142,47 @@ public class BaseClass {
 		}
 	}
 
+	public static void minimizwWiindow() {
+		Dimension d = new Dimension(500, 500);
+		driver.manage().window().setSize(d);
+
+	}
+
+	public static void ActionClass(String act, WebElement element) {
+		try {
+			Actions a = new Actions(driver);
+			if (act.equalsIgnoreCase("movetoelement")) {
+				a.moveToElement(element).build().perform();
+			} else if (act.equalsIgnoreCase("clickOn")) {
+				a.click(element).build().perform();
+			} else if (act.equalsIgnoreCase("doubleclick")) {
+				a.contextClick(element).build().perform();
+			} else if (act.equalsIgnoreCase("click")) {
+				a.click().build().perform();
+			}else if (act.equalsIgnoreCase("clickandhold")) {
+				a.clickAndHold(element).build().perform();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static void clear(WebElement element) {
 		element.clear();
 
 	}
 
-	public static void alert() {
+	public static void Acceptalert() {
 		driver.switchTo().alert().accept();
 
 	}
 
-	public static void thread() throws InterruptedException {
-		Thread.sleep(8000);
+	public static void RejectAlert() {
+		driver.switchTo().alert().dismiss();
+	}
+
+	public static void sleep(int seconds) throws InterruptedException {
+		Thread.sleep(seconds);
 	}
 
 	public static void scrollUpandDown(WebElement element) {
@@ -138,4 +194,40 @@ public class BaseClass {
 		}
 	}
 
+	public static void frame(String frame) {
+		try {
+			if (frame.equalsIgnoreCase("frame1")) {
+				driver.switchTo().frame(0);
+			} else if (frame.equalsIgnoreCase("frame2")) {
+			} else {
+				driver.switchTo().defaultContent();
+			}
+		} catch (Exception e) {
+       e.printStackTrace();
+		}
+	}
+
+	public static String Particular_Data_From_Excel(String path, int row_index, int cell_index) throws Throwable {
+		File f = new File(path);
+		FileInputStream fis = new FileInputStream(f);
+		Workbook wb = new XSSFWorkbook(fis);
+		Sheet sheetAt = wb.getSheetAt(0);
+		Row row = sheetAt.getRow(row_index);
+		Cell cell = row.getCell(cell_index);
+		CellType cellType = cell.getCellType();
+		if (cellType.equals(CellType.STRING)) {
+		    value = cell.getStringCellValue();
+			
+		}else if(cellType.equals(CellType.NUMERIC)) {
+			double numericCellValue = cell.getNumericCellValue();
+			int val = (int) numericCellValue;
+		    value = String.valueOf(val);
+			
+			
+		}
+		
+		return value;
+
+		
+	}
 }

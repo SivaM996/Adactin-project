@@ -2,80 +2,71 @@ package com.Mini_project_Oct_30_Maven;
 
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.Select;
+import com.automationPractice.helper.File_Reader_Manager_AP;
+import com.sdp.automationpractice.Page_object_manager_AP;
 
 public class AutomationPractice extends BaseClass {
-	public static void main(String[] args) throws InterruptedException {
+	public static WebDriver driver = BaseClass.getBrowser("chrome");
+	public static Page_object_manager_AP Pom_Ap = new Page_object_manager_AP(driver);
 
-		System.setProperty("webdriver.chrome.driver",
-				"C:\\Users\\91733\\Desktop\\eclipse-workspace\\Selenium_classes\\Driver\\chromedriver.exe");
+	public static void main(String[] args) throws Throwable {
 
-		WebDriver driver = new ChromeDriver();
-		implicitwait();
-		driver.get("http://automationpractice.com/index.php");
-		maximise();
+		implicitwait(30, TimeUnit.SECONDS);
 
-		WebElement signIN = driver.findElement(By.xpath("//a[@class='login']"));
-		ClickOnElement(signIN);
+		String url = File_Reader_Manager_AP.getInstanceFRM().getInstanceCR().getURL();
+		getURL(url);
 
-		WebElement email = driver.findElement(By.xpath("//input[@id='email']"));
-		inputValueElement(email, "abdf54387cd@gmail.com");
+		ClickOnElement(Pom_Ap.getInstanceHp().getSignIN());
 
-		WebElement passwrd = driver.findElement(By.xpath("//input[@id='passwd']"));
-		inputValueElement(passwrd, "djnsng");
+//		String email = File_Reader_Manager_AP.getInstanceFRM().getInstanceCR().getEmail();
+//		inputValueElement(Pom_Ap.getInstancelp().getEmail(), email);
+		
+		String particular_Data_From_Excel = Particular_Data_From_Excel("C:\\Users\\91733\\Desktop\\Manual_Automation_Practice.xlsx", 2, 5);
+		inputValueElement(Pom_Ap.getInstancelp().getEmail(), particular_Data_From_Excel);
+		
+		
+//		String passwd = File_Reader_Manager_AP.getInstanceFRM().getInstanceCR().getPasswd();
+//		inputValueElement(Pom_Ap.getInstancelp().getPassword(), passwd);
 
-		WebElement signInbutton = driver.findElement(By.xpath("//button[@id='SubmitLogin']"));
-		ClickOnElement(signInbutton);
+		String particular_Data_From_Excel2 = Particular_Data_From_Excel("C:\\Users\\91733\\Desktop\\Manual_Automation_Practice.xlsx", 3, 5);
+		inputValueElement(Pom_Ap.getInstancelp().getPassword(), particular_Data_From_Excel2);
+		
+		
+		ClickOnElement(Pom_Ap.getInstancelp().getSignInbutton());
 
-		WebElement SearchBox = driver.findElement(By.xpath("(//input[@type='text'])[1]"));
-		inputValueElement(SearchBox, "T shirt");
+		String searchDress = File_Reader_Manager_AP.getInstanceFRM().getInstanceCR().getSearchDress();
+		inputValueElement(Pom_Ap.getInstancestp().getTshirt(), searchDress);
 
-		WebElement Button = driver.findElement(By.xpath("(//button[@type='submit'])[1]"));
-		ClickOnElement(Button);
+		ClickOnElement(Pom_Ap.getInstancestp().getSearch());
 
-		Thread.sleep(3000);
-		WebElement pic = driver.findElement(By.xpath("//img[@width='250']"));
+		sleep(3000);
 
-		WebElement more = driver.findElement(By.xpath("//span[contains(text(),'More')]"));
+		ActionClass("clickandhold", Pom_Ap.getInstancestp().getClickandHoldPic());
 
-		Actions action = new Actions(driver);
-		action.clickAndHold(pic).build().perform();
-		more.click();
+		ClickOnElement(Pom_Ap.getInstancestp().getMore());
 
-		WebElement select = driver.findElement(By.xpath("//select[@name='group_1']"));
-		Dropdown("byindex", select, "1");
+		String shirtSize = File_Reader_Manager_AP.getInstanceFRM().getInstanceCR().getShirtSize();
+		Dropdown("byindex", Pom_Ap.getInstanceMop().getSize(), shirtSize);
 
-		WebElement Addtokart = driver.findElement(By.xpath("//span[contains(text(),'Add to cart')]"));
-		ClickOnElement(Addtokart);
+		ClickOnElement(Pom_Ap.getInstanceMop().getAddToKart());
 
-		WebElement Proceedtocheckout = driver.findElement(By.xpath("//span[contains(text(),'Proceed to checkout')]"));
-		ClickOnElement(Proceedtocheckout);
+		ClickOnElement(Pom_Ap.getInstancePoc().getProceedtocheckout());
 
-		WebElement ProceedToCheckout2 = driver.findElement(By.xpath("//*[@id=\"center_column\"]/p[2]/a[1]/span"));
-		ClickOnElement(ProceedToCheckout2);
+		ClickOnElement(Pom_Ap.getInstanceSm().getProceedToCheckOut2());
 
-		WebElement addComment = driver.findElement(By.xpath("//textarea[@class='form-control']"));
-		inputValueElement(addComment, "this is selenium project");
+		String commentSection = File_Reader_Manager_AP.getInstanceFRM().getInstanceCR().getCommentSection();
+		inputValueElement(Pom_Ap.getInstanceAp().getCommentSection(), commentSection);
 
-		WebElement ProceedToCheckout3 = driver.findElement(By.xpath("//span[text()='Proceed to checkout']"));
-		ClickOnElement(ProceedToCheckout3);
+		ClickOnElement(Pom_Ap.getInstanceAp().getProceedToChcekout3());
 
-		WebElement checkbox1 = driver.findElement(By.xpath("//input[@type='checkbox']"));
-		ClickOnElement(checkbox1);
+		ClickOnElement(Pom_Ap.getInstanceSp().getCheckBox());
 
-		WebElement ProceedToCheckout4 = driver.findElement(By.xpath("//*[@id=\'form\']/p/button/span"));
-		ClickOnElement(ProceedToCheckout4);
+		ClickOnElement(Pom_Ap.getInstanceSp().getProceedToCheckOut());
 
-		WebElement pay = driver.findElement(By.xpath("//a[@class='bankwire']"));
-		ClickOnElement(pay);
+		ClickOnElement(Pom_Ap.getInstanceCop().getPay());
 
-		WebElement confirmOrder = driver.findElement(By.xpath("//*[@id=\'cart_navigation\']/button/span"));
-		ClickOnElement(confirmOrder);
+		ClickOnElement(Pom_Ap.getInstanceCop().getConfirmOrder());
 	}
 
 }
