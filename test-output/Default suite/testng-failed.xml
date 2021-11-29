@@ -3,11 +3,19 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.testng.features.My_test_demo">
+      <class name="com.testng.automationPractice.TestNg_Automation">
         <methods>
-          <include name="password"/>
+          <include name="shipping_page"/>
+          <include name="summary_page"/>
+          <include name="addressPage"/>
+          <include name="login_page"/>
+          <include name="moreAboutDressPage"/>
+          <include name="tshirtPage"/>
+          <include name="url"/>
+          <include name="confirm_order_page"/>
+          <include name="proceedToCheckOut1"/>
         </methods>
-      </class> <!-- com.testng.features.My_test_demo -->
+      </class> <!-- com.testng.automationPractice.TestNg_Automation -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

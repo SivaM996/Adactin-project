@@ -5,7 +5,6 @@ import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.Mini_project_Oct_30_Maven.BaseClass;
@@ -18,7 +17,7 @@ public class TestNg_Automation extends BaseClass {
 	public static WebDriver driver = BaseClass.getBrowser("chrome");
 	public static Page_object_manager_AP Pom_Ap = new Page_object_manager_AP(driver);
 	
-	@Test(priority = 1)
+	@Test(priority = 0)
 	private void log4j() {
 		PropertyConfigurator.configure("log4j.properties");
 
@@ -28,7 +27,7 @@ public class TestNg_Automation extends BaseClass {
 	}
 
 	
-	@BeforeMethod
+	@Test(priority = 1)
 	private void url() throws Throwable {
 
 		implicitwait(30, TimeUnit.SECONDS);

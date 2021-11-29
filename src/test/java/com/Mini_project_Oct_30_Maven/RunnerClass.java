@@ -21,7 +21,7 @@ public class RunnerClass extends BaseClass {
 		driver = getBrowser("chrome");
 
 		getURL("https://adactinhotelapp.com/index.php");
-		implicitwait();
+		//implicitwait();
 		maximise();
 		
 
@@ -104,7 +104,7 @@ public class RunnerClass extends BaseClass {
 		ClickOnElement(book);
 		scrollUpandDown(book);
 
-		thread();
+		thread(3000);
 
 		Screenshot();
 
