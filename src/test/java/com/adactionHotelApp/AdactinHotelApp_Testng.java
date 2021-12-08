@@ -6,6 +6,8 @@ import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.WebDriver;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.Mini_project_Oct_30_Maven.Adactin_practice_2;
@@ -34,17 +36,26 @@ public class AdactinHotelApp_Testng extends BaseClass {
 		implicitwait(30, TimeUnit.SECONDS);
 	}
 
-	@Test(priority = 2)
-	private void login() throws Throwable {
+	@DataProvider
+	private Object[][] data() {
+
+		return new Object[][] { { "SivaM996", "shivashiva12345" }
+
+		};
+	}
+
+	@Test(priority = 2, dataProvider = "data")
+
+	private void login(String name, String password) throws Throwable {
 		// TODO Auto-generated method stub
 
-		String UserName = Particular_Data_From_Excel(
-				"C:\\Users\\91733\\Desktop\\eclipse-workspace\\Mini_project_Oct_30_Maven\\Book1.manual2.xlsx", 1, 5);
-		inputValueElement(Pom.getInstanceHp().getUsername(), UserName);
+//		String UserName = Particular_Data_From_Excel(
+//				"C:\\Users\\91733\\Desktop\\eclipse-workspace\\Mini_project_Oct_30_Maven\\Book1.manual2.xlsx", 1, 5);
+		inputValueElement(Pom.getInstanceHp().getUsername(), name);
 
-		String passwd = Particular_Data_From_Excel(
-				"C:\\Users\\91733\\Desktop\\eclipse-workspace\\Mini_project_Oct_30_Maven\\Book1.manual2.xlsx", 2, 5);
-		inputValueElement(Pom.getInstanceHp().getPass(), passwd);
+//		String passwd = Particular_Data_From_Excel(
+//				"C:\\Users\\91733\\Desktop\\eclipse-workspace\\Mini_project_Oct_30_Maven\\Book1.manual2.xlsx", 2, 5);
+		inputValueElement(Pom.getInstanceHp().getPass(), password);
 
 		ClickOnElement(Pom.getInstanceHp().getLogin());
 		log.info("Hotel booking process");

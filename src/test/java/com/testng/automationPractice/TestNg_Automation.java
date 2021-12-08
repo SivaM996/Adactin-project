@@ -22,11 +22,9 @@ public class TestNg_Automation extends BaseClass {
 		PropertyConfigurator.configure("log4j.properties");
 
 		log.info("Automation Session started");
-
-		log.info("Initiating url");
+        log.info("Initiating url");
 	}
 
-	
 	@Test(priority = 1)
 	private void url() throws Throwable {
 
